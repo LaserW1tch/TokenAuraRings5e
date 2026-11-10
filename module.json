@@ -1,0 +1,30 @@
+{
+  "id": "token-aura-rings-5e",
+  "title": "Token Aura Rings 5e",
+  "description": "Shows manually configured, colored aura rings with a slowly swirling mist effect, without creating area effects.",
+  "version": "0.12.0",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "14"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "5.0.0",
+          "verified": "6.0.6"
+        }
+      }
+    ]
+  },
+  "authors": [
+    { "name": "OpenAI" }
+  ],
+  "esmodules": [
+    "scripts/token-aura-rings.js"
+  ],
+  "readme": "README.md",
+  "flags": {}
+}

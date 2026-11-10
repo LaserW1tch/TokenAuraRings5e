@@ -148,6 +148,9 @@ function getMistFrames() {
 
 async function createMistFrames() {
   const image = new Image();
+  // Forge may serve module assets from its CDN, so opt into CORS before loading
+  // the image; otherwise drawing it taints the canvas and blocks getImageData.
+  image.crossOrigin = "anonymous";
   image.src = `modules/${MODULE_ID}/assets/aura-mist-ring.png`;
   await image.decode();
 

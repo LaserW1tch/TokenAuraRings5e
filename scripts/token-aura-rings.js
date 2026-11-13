@@ -84,7 +84,10 @@ async function refreshTokenRing(token) {
   const dimensions = canvas.dimensions;
   const gridSize = dimensions.size;
   const unitSize = dimensions.distance || 5;
-  const radius = (settings.radius / unitSize) * gridSize;
+  const radiusOffset = settings.measurementStyle === "emanation"
+    ? Math.min(token.w, token.h) / 2
+    : 0;
+  const radius = (settings.radius / unitSize) * gridSize + radiusOffset;
   existing = token[RING_NAME];
   const ring = existing ?? new PIXI.Sprite(frames[0]);
   const spriteRadiusRatio = 0.46;
@@ -205,7 +208,8 @@ function getCharacterSettings(actor) {
   return {
     enabled: saved.enabled === true,
     color: normalizeColorString(saved.color ?? "#f4d35e"),
-    radius: normalizeRadius(saved.radius ?? DEFAULT_RADIUS)
+    radius: normalizeRadius(saved.radius ?? DEFAULT_RADIUS),
+    measurementStyle: saved.measurementStyle === "emanation" ? "emanation" : "sphere"
   };
 }
 
@@ -231,7 +235,16 @@ function openPlayerSettings(actor = canvas.tokens.controlled[0]?.actor) {
         <label for="tar5e-radius">Radius (feet)</label>
         <div class="form-fields"><input id="tar5e-radius" type="number" min="1" max="500" step="1" value="${current.radius}"></div>
       </div>
-      <p class="notes">The radius is measured from the center of the token. Diameter is twice the radius.</p>
+      <div class="form-group">
+        <label for="tar5e-measurement-style">Area measurement</label>
+        <div class="form-fields">
+          <select id="tar5e-measurement-style">
+            <option value="sphere" ${current.measurementStyle === "sphere" ? "selected" : ""}>Sphere (from center)</option>
+            <option value="emanation" ${current.measurementStyle === "emanation" ? "selected" : ""}>Emanation (from edge)</option>
+          </select>
+        </div>
+      </div>
+      <p class="notes">Sphere measures the radius from the token's center. Emanation adds half the token's smaller dimension to the radius, measuring outward from its edge. The ring remains circular.</p>
     </form>`,
     buttons: {
       save: {
@@ -241,7 +254,8 @@ function openPlayerSettings(actor = canvas.tokens.controlled[0]?.actor) {
           allSettings[actor.uuid ?? actor.id] = {
             enabled: html.find("#tar5e-enabled").prop("checked"),
             color: normalizeColorString(html.find("#tar5e-color").val()),
-            radius: normalizeRadius(html.find("#tar5e-radius").val())
+            radius: normalizeRadius(html.find("#tar5e-radius").val()),
+            measurementStyle: html.find("#tar5e-measurement-style").val() === "emanation" ? "emanation" : "sphere"
           };
           await game.settings.set(MODULE_ID, "characterSettings", allSettings);
           refreshAll();

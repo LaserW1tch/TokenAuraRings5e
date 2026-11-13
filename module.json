@@ -1,8 +1,8 @@
 {
   "id": "token-aura-rings-5e",
-  "title": "Token Aura Rings 5e",
+  "title": "LaserW1tch's Token Aura Rings 5e",
   "description": "Shows manually configured, colored aura rings with a slowly swirling mist effect, without creating area effects.",
-  "version": "0.12.1",
+  "version": "0.13.1",
   "compatibility": {
     "minimum": "13",
     "verified": "14"
@@ -24,7 +24,7 @@
   ],
   "url": "https://github.com/LaserW1tch/TokenAuraRings5e",
   "manifest": "https://github.com/LaserW1tch/TokenAuraRings5e/releases/latest/download/module.json",
-  "download": "https://github.com/LaserW1tch/TokenAuraRings5e/releases/download/v0.12.1/token-aura-rings-5e-0.12.1.zip",
+  "download": "https://github.com/LaserW1tch/TokenAuraRings5e/releases/download/v0.13.1/token-aura-rings-5e-0.13.1.zip",
   "bugs": "https://github.com/LaserW1tch/TokenAuraRings5e/issues",
   "changelog": "https://github.com/LaserW1tch/TokenAuraRings5e/releases",
   "esmodules": [
